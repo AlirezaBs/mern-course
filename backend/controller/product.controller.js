@@ -29,7 +29,13 @@ export const createProduct = async (req, res) => {
    if (!product.price) {
       return res.status(400).json({
          success: false,
-         message: "Price field is required",
+         message: "Price field is required", 
+      })
+   }
+   if (isNaN(product.price)) {
+      return res.status(400).json({
+         success: false,
+         message: "Price must be a number",
       })
    }
    if (!product.image) {
@@ -86,9 +92,9 @@ export const updateProduct = async (req, res) => {
    const product = req.body
 
    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({
+      return res.status(404).json({
          success: false,
-         message: "Invalid product ID",
+         message: "Product not found",
       })
    }
 
